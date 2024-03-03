@@ -3,39 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dados da URL</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-    </style>
+    <title>Exibição de Dados</title>
 </head>
 <body>
-    <h1>Dados Recebidos</h1>
-    <p>UUID: <span id="uuid">Carregando...</span></p>
-    <p>Email Criptografado: <span id="emailCriptografado">Carregando...</span></p>
+    <h1>Informações Recebidas</h1>
+    <p>UUID: <span id="valorUUID">Aguardando...</span></p>
+    <p>Email Criptografado: <span id="valorEmail">Aguardando...</span></p>
 
     <script>
-        function extrairDadosDaURL() {
-            // Criar um objeto URLSearchParams com os parâmetros de consulta da URL atual
-            const urlParams = new URLSearchParams(window.location.search);
+        // Função para extrair os parâmetros de consulta da URL
+        function extrairParametrosURL() {
+            const parametros = new URLSearchParams(window.location.search);
+            const uuid = parametros.get('uuid');
+            const email = parametros.get('email');
 
-            // Extrair os valores dos parâmetros 'uuid' e 'email'
-            const uuid = urlParams.get('uuid');
-            const emailCriptografado = urlParams.get('email');
-
-            // Selecionar os elementos no HTML para exibir os valores
-            const uuidElement = document.getElementById('uuid');
-            const emailCriptografadoElement = document.getElementById('emailCriptografado');
-
-            // Atualizar o texto desses elementos com os valores extraídos
-            uuidElement.textContent = uuid || 'Não fornecido';
-            emailCriptografadoElement.textContent = emailCriptografado || 'Não fornecido';
+            // Exibir os valores no HTML
+            document.getElementById('valorUUID').textContent = uuid ? uuid : 'Não fornecido';
+            document.getElementById('valorEmail').textContent = email ? email : 'Não fornecido';
         }
 
-        // Chamar a função ao carregar a página
-        window.onload = extrairDadosDaURL;
+        // Executar a função ao carregar a página
+        window.addEventListener('DOMContentLoaded', (event) => {
+            extrairParametrosURL();
+        });
     </script>
 </body>
 </html>
