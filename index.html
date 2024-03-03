@@ -1,40 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-    <title>Redirecionamento com URL Base Constante</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados da URL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
+    <h1>Dados Recebidos</h1>
+    <p>UUID: <span id="uuid">Carregando...</span></p>
+    <p>Email Criptografado: <span id="emailCriptografado">Carregando...</span></p>
+
     <script>
-        // Definir a URL base como uma constante
-        const URL_BASE = "https://servicoexpresso.site/";
+        function extrairDadosDaURL() {
+            // Criar um objeto URLSearchParams com os parâmetros de consulta da URL atual
+            const urlParams = new URLSearchParams(window.location.search);
 
-        // Função para extrair os valores da URL
-        function extrairValoresDaURL() {
-            // Obter a URL atual
-            const urlAtual = window.location.href;
+            // Extrair os valores dos parâmetros 'uuid' e 'email'
+            const uuid = urlParams.get('uuid');
+            const emailCriptografado = urlParams.get('email');
 
-            // Usar uma expressão regular para extrair o UUID e o Email Criptografado
-            const regex = /\/tt\/([a-z0-9-]+)\/([A-Za-z0-9-_=]+)/;
-            const resultados = regex.exec(urlAtual);
+            // Selecionar os elementos no HTML para exibir os valores
+            const uuidElement = document.getElementById('uuid');
+            const emailCriptografadoElement = document.getElementById('emailCriptografado');
 
-            // Verificar se os resultados foram encontrados
-            if (resultados && resultados.length >= 3) {
-                // Resultados[1] contém o UUID, e resultados[2] contém o Email Criptografado
-                const uuid = resultados[1];
-                const emailCriptografado = resultados[2];
-
-                // Construir a nova URL usando a URL base e os valores extraídos como parâmetros de consulta
-                const novaURL = `${URL_BASE}?uuid=${uuid}&email=${encodeURIComponent(emailCriptografado)}`;
-                
-                // Redirecionar para a nova URL
-                window.location.href = novaURL;
-            }
+            // Atualizar o texto desses elementos com os valores extraídos
+            uuidElement.textContent = uuid || 'Não fornecido';
+            emailCriptografadoElement.textContent = emailCriptografado || 'Não fornecido';
         }
 
         // Chamar a função ao carregar a página
-        window.onload = function() {
-            extrairValoresDaURL();
-        };
+        window.onload = extrairDadosDaURL;
     </script>
 </body>
 </html>
