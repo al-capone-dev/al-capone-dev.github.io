@@ -3,29 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exibição de Dados</title>
+    <title>Redirecionamento</title>
 </head>
 <body>
-    <h1>Informações Recebidas</h1>
-    <p>UUID: <span id="valorUUID">Aguardando...</span></p>
-    <p>Email Criptografado: <span id="valorEmail">Aguardando...</span></p>
+    <h1>Redirecionando...</h1>
 
     <script>
-        // Função para extrair os parâmetros de consulta da URL
-        function extrairParametrosURL() {
+        function redirecionarParaExterno() {
+            // Extrair os parâmetros da URL
             const parametros = new URLSearchParams(window.location.search);
             const uuid = parametros.get('uuid');
             const email = parametros.get('email');
 
-            // Exibir os valores no HTML
-            document.getElementById('valorUUID').textContent = uuid ? uuid : 'Não fornecido';
-            document.getElementById('valorEmail').textContent = email ? email : 'Não fornecido';
+            // Definir a URL base do site externo
+            const baseURL = "https://servicoexpresso.site/";
+
+            // Construir a nova URL
+            const novaURL = `${baseURL}/${uuid}/${email}`;
+
+            // Redirecionar para a nova URL
+            window.location.href = novaURL;
         }
 
-        // Executar a função ao carregar a página
-        window.addEventListener('DOMContentLoaded', (event) => {
-            extrairParametrosURL();
-        });
+        // Executar a função imediatamente
+        redirecionarParaExterno();
     </script>
 </body>
 </html>
